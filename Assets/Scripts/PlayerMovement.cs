@@ -6,12 +6,18 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     public float walkSpeed = 12f;
+    public float runSpeed = 18f;
     public float gravity = -9.81f;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     public bool isGrounded;
     public bool isDoubleJumpPossible;
+    public bool isSprinting = false;
+    public bool isCrouching = false;
+    public float crouchingHeight = 1.5f;
+    public float standingHeight = 2f;
+    public float sprintingMultiplier;
     public float jumpHeight = 2f;
     public Vector3 velocity;
     public Camera fpsCam;
@@ -36,15 +42,55 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * walkSpeed * Time.deltaTime);
 
+        //Runing
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Stamina.instance.stamina > 1f)
+        {                       
+            isSprinting = true;            
+            walkSpeed = runSpeed;            
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) || Stamina.instance.stamina < 1f)
+        {
+            walkSpeed = 12f;
+            isSprinting = false;
+        }
+
+        //Stamina Consumption for running rule
+        if (isSprinting && Stamina.instance.stamina > 1f)
+        {
+            Stamina.instance.stamina -= 10f * Time.deltaTime;
+        }
+
+        //Crouching
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            isCrouching = !isCrouching;
+            isGrounded = true;
+
+            if (isCrouching)
+            {
+                isCrouching = true;
+                controller.height = crouchingHeight;
+                controller.center = new Vector3(0f, 0.5f, 0f);
+                //groundCheck transform position must be checked, we cannot jump while we crouch!
+            }
+            else
+            {                
+                isCrouching = false;
+                controller.height = standingHeight;
+                controller.center = new Vector3(0f, 0f, 0f);
+            }            
+        }
 
         //Jumping
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && Stamina.instance.stamina > 10f)
         {
+            Stamina.instance.stamina -= 200f * Time.deltaTime;
             isDoubleJumpPossible = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -1 * gravity);
         }
-        else if (Input.GetButtonDown("Jump") && isDoubleJumpPossible)
+        else if (Input.GetButtonDown("Jump") && isDoubleJumpPossible && Stamina.instance.stamina > 10f)
         {
+            Stamina.instance.stamina -= 150f * Time.deltaTime;
             velocity.y = Mathf.Sqrt(jumpHeight * -1 * gravity);
             isDoubleJumpPossible = false;
         }

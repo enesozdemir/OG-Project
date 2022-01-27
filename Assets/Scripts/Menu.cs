@@ -7,6 +7,9 @@ public class Menu : MonoBehaviour
 {
     public GameObject tutorialInfo;
     public bool info;
+    [Range(40, 100)]
+    public float fovValue;
+    public Camera cam;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +19,12 @@ public class Menu : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        TutorialInfo();
+        FOV();
+    }
+
+    public void TutorialInfo()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -30,5 +39,10 @@ public class Menu : MonoBehaviour
                 info = false;
             }
         }
+    }
+
+    public void FOV()
+    {
+        fovValue = cam.fieldOfView;
     }
 }
