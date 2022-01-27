@@ -139,6 +139,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1885246983}
     - target: {fileID: 8661632160478931354, guid: c732cfc4ee8b10241bf1f1ca40106414, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 280463644}
+    - target: {fileID: 8661632160478931354, guid: c732cfc4ee8b10241bf1f1ca40106414, type: 3}
+      propertyPath: fovValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661632160478931354, guid: c732cfc4ee8b10241bf1f1ca40106414, type: 3}
       propertyPath: tutorialInfo
       value: 
       objectReference: {fileID: 1120683316}
@@ -306,6 +314,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4409359066983586475, guid: 7a52009d9a7292545bba1a122b9556ba, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7a52009d9a7292545bba1a122b9556ba, type: 3}
+--- !u!20 &280463644 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4409359066983586477, guid: 7a52009d9a7292545bba1a122b9556ba, type: 3}
+  m_PrefabInstance: {fileID: 280463643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &494946834
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -43,6 +43,6 @@ public class Menu : MonoBehaviour
 
     public void FOV()
     {
-        fovValue = cam.fieldOfView;
+        cam.fieldOfView = fovValue;
     }
 }
