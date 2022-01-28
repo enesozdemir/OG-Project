@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-   public Transform target;
+   public Vector3 dir;
     Rigidbody rb;
     public float mermihizi;
     private void Start()
@@ -15,6 +15,6 @@ public class Bullet : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.velocity=transform.forward*mermihizi*Time.deltaTime;
+        rb.velocity=-dir*mermihizi*Time.deltaTime;
     }
 }

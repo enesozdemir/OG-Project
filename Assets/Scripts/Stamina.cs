@@ -34,8 +34,6 @@ public class Stamina : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RegenerateStamina();
-
         staminaBar.value = stamina;
         if (stamina < 0)
         {

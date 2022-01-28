@@ -89,11 +89,12 @@ public class PlayerMovement : MonoBehaviour
 
         //Jumping
         anim.SetBool("ground", isGrounded);
-        if (Input.GetButtonDown("Jump") && isGrounded && Stamina.instance.stamina > 10f)
+         /* if (Input.GetButtonDown("Jump") && isGrounded && Stamina.instance.stamina > 10f)
         {
             Stamina.instance.stamina -= 200f * Time.deltaTime;
             isDoubleJumpPossible = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -1 * gravity);
+            print("jump");
 
         }
         else if (Input.GetButtonDown("Jump") && isDoubleJumpPossible && Stamina.instance.stamina > 10f)
@@ -101,10 +102,25 @@ public class PlayerMovement : MonoBehaviour
             Stamina.instance.stamina -= 150f * Time.deltaTime;
             velocity.y = Mathf.Sqrt(jumpHeight * -1 * gravity);
             isDoubleJumpPossible = false;
+            print("djump");
+
+        }*/
+         if(isGrounded)
+        {
+           Stamina.instance.RegenerateStamina();
+        }
+         if (Input.GetButton("Jump")&& Stamina.instance.stamina > 10f)
+        {
+            Stamina.instance.stamina -= 10 * Time.deltaTime;
+            velocity.y = Mathf.Sqrt(jumpHeight * -1 * gravity);
+        }
+         else
+        {
+            velocity.y += gravity * Time.deltaTime;
         }
 
         //Gravity Implication
-        velocity.y += gravity * Time.deltaTime;
+      
         controller.Move(velocity * Time.deltaTime);
 
         //Aim and interact/pickup
