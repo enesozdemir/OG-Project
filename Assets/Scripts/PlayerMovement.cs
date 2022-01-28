@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 18f;
     public float gravity = -9.81f;
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    public float groundDistance = 1f;
     public LayerMask groundMask;
     public bool isGrounded;
     public bool isDoubleJumpPossible;
@@ -23,7 +23,11 @@ public class PlayerMovement : MonoBehaviour
     public Camera fpsCam;
     public Interactable focus;
 
-
+    Animator anim;
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -41,17 +45,19 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * walkSpeed * Time.deltaTime);
-
+        anim.SetFloat("hiz", z*walkSpeed);
         //Runing
         if (Input.GetKeyDown(KeyCode.LeftShift) && Stamina.instance.stamina > 1f)
         {                       
             isSprinting = true;            
-            walkSpeed = runSpeed;            
+            walkSpeed = runSpeed;
+            anim.SetBool("isSpriting", isSprinting);
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) || Stamina.instance.stamina < 1f)
         {
             walkSpeed = 12f;
             isSprinting = false;
+            anim.SetBool("isSpriting", isSprinting);
         }
 
         //Stamina Consumption for running rule
@@ -82,11 +88,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Jumping
+        anim.SetBool("ground", isGrounded);
         if (Input.GetButtonDown("Jump") && isGrounded && Stamina.instance.stamina > 10f)
         {
             Stamina.instance.stamina -= 200f * Time.deltaTime;
             isDoubleJumpPossible = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -1 * gravity);
+
         }
         else if (Input.GetButtonDown("Jump") && isDoubleJumpPossible && Stamina.instance.stamina > 10f)
         {
@@ -94,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -1 * gravity);
             isDoubleJumpPossible = false;
         }
-        
+
         //Gravity Implication
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);

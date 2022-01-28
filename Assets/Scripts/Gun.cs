@@ -13,6 +13,11 @@ public class Gun : MonoBehaviour
     public GameObject impactEffect;
     public bool fullAutoFire;
     public Text fireType;
+    Animator anim;
+    private void Start()
+    {
+        anim = GetComponentInParent<Animator>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -20,6 +25,7 @@ public class Gun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Ammo.instance.Reload();
+            anim.CrossFade("reload", .1f);
         }
 
         if (Input.GetButton("Fire1") && fullAutoFire)
@@ -27,6 +33,8 @@ public class Gun : MonoBehaviour
             if (!Ammo.instance.isMagEmpty)
             {
                 Shoot();
+                anim.CrossFade("fire", .01f);
+
             }
         }
         else if (Input.GetButtonDown("Fire1"))
@@ -34,6 +42,8 @@ public class Gun : MonoBehaviour
             if (!Ammo.instance.isMagEmpty)
             {
                 Shoot();
+                anim.CrossFade("fire", .01f);
+
             }
         }
 
