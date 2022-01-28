@@ -136,6 +136,12 @@ public class PlayerMovement : MonoBehaviour
                 {
                     SetFocus(interactable);
                 }
+                Teleport teleport = hit.collider.GetComponent<Teleport>();
+                if(teleport!=null)
+                {
+                    teleport.GetTeleport();
+                }
+                
             }
         }
 
