@@ -209,7 +209,7 @@ MonoBehaviour:
   isCrouching: 0
   crouchingHeight: 1.5
   standingHeight: 2
-  sprintingMultiplier: 0
+  sprintingMultiplier: 6
   jumpHeight: 3
   velocity: {x: 0, y: 0, z: 0}
   fpsCam: {fileID: 4409359066983586477}
