@@ -7,9 +7,12 @@ public class Menu : MonoBehaviour
 {
     public GameObject tutorialInfo;
     public bool info;
-    [Range(40, 100)]
-    public float fovValue;
-    public Camera cam;
+    [Range(40f, 100f)]
+    public float fovValue = 40f;
+    public Camera fpsCam;
+    public Camera miniMapCam;
+    [Range(5f, 20f)]
+    public float miniMapZoom = 12f;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,7 @@ public class Menu : MonoBehaviour
     {
         TutorialInfo();
         FOV();
+        MinimapZoom();
     }
 
     public void TutorialInfo()
@@ -43,6 +47,13 @@ public class Menu : MonoBehaviour
 
     public void FOV()
     {
-        cam.fieldOfView = fovValue;
+        //Buttons must be added
+        fpsCam.fieldOfView = fovValue;
+    }
+
+    public void MinimapZoom()
+    {
+        //Buttons must be added
+        miniMapCam.orthographicSize = miniMapZoom;
     }
 }
