@@ -169,11 +169,10 @@ public class EnemyManager : MonoBehaviour
                     {
                         Vector3 targetDirection = characterStats.transform.position - transform.position;
                         float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
-                        if (viewAbleAngle > enemyStats.minimumDetectionAngle && viewAbleAngle < enemyStats.maximumDetectionAngle)
-                        {
+                       
                             canFire = true;
                             anim.SetBool("isfire", true);
-                        }
+                       
                     }
                 }
 
@@ -185,13 +184,9 @@ public class EnemyManager : MonoBehaviour
              
                 timer += Time.deltaTime;
                 RaycastHit hit;
-                if (Physics.Raycast(aim.position, aim.forward, out hit, enemyStats.fireRecognize))
-                {
-                    if (timer > enemyStats.mermiFrekans)
-                        Fire();
-                }
                 transform.rotation = Quaternion.Slerp(transform.rotation, Player.transform.rotation, enemyStats.rotationSpeed / Time.deltaTime);
                 Collider[] colliders = Physics.OverlapSphere(transform.position, enemyStats.fireRecognize, detectionLayer);
+               
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     PlayerMovement characterStats = colliders[i].transform.GetComponent<PlayerMovement>();
@@ -199,20 +194,24 @@ public class EnemyManager : MonoBehaviour
                     {
                         Vector3 targetDirection = characterStats.transform.position - transform.position;
                         float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
-                        if (viewAbleAngle > enemyStats.minimumDetectionAngle && viewAbleAngle < enemyStats.maximumDetectionAngle)
-                        {
+                       
                             canFire = true;
-                        }
+                            print("ates");
+                            if (timer > enemyStats.mermiFrekans)
+                                Fire();
+                      
                     }
                 }
                 if (colliders.Length == 0)
                 {
+                    print("miss");
                     canFire = false;
                     anim.SetBool("isfire", false);
                 }
             }
         }
     }
+  
 
     private void Fire()
     {
