@@ -43,6 +43,16 @@ public class Menu : MonoBehaviour
                 info = false;
             }
         }
+        if(Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            if(miniMapZoom<20)
+             miniMapZoom += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            if (miniMapZoom > 1)
+                miniMapZoom -= 1;
+        }
     }
 
     public void FOV()

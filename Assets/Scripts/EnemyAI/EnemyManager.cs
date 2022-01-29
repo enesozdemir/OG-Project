@@ -18,6 +18,7 @@ public class EnemyManager : MonoBehaviour
     public float timer;
     Animator anim;
     public bool isdead;
+    public GameObject righteyes, lefteyes;
   
    public bool canFly;
     private void Start()
@@ -139,7 +140,7 @@ public class EnemyManager : MonoBehaviour
                         if (viewAbleAngle > enemyStats.minimumDetectionAngle && viewAbleAngle < enemyStats.maximumDetectionAngle)
                         {
                             isRecognize = true;
-                            anim.SetBool("isrun", true);
+                           
                         }
                     }
 
@@ -147,15 +148,15 @@ public class EnemyManager : MonoBehaviour
                 if (colliders.Length == 0)
                 {
                     isRecognize = false;
-                    anim.SetBool("isrun", false);
+                   
 
                 }
             }
             else if (isRecognize && !canFire)
             {
 
-
-               Vector3 dir= transform.position - Player.transform.position;
+                transform.LookAt(Player);
+                Vector3 dir= transform.position - Player.transform.position;
                 dir.y = 0;
                 dir.Normalize();
                 rb.velocity = -dir * 100 * Time.deltaTime;
@@ -171,7 +172,7 @@ public class EnemyManager : MonoBehaviour
                         float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
                        
                             canFire = true;
-                            anim.SetBool("isfire", true);
+                            
                        
                     }
                 }
@@ -206,12 +207,13 @@ public class EnemyManager : MonoBehaviour
                 {
                     print("miss");
                     canFire = false;
-                    anim.SetBool("isfire", false);
+                   
                 }
             }
         }
+
     }
-  
+
 
     private void Fire()
     {

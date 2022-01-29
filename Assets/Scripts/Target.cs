@@ -25,10 +25,14 @@ public class Target : MonoBehaviour
 
     private void Die()
     {
-        animator.CrossFade("Death", .1f);
+
+    
         enemyManager.isdead = true;
         if(!enemyManager.canFly)
-        enemyManager.navMesh.isStopped = true;
+        {
+                animator.CrossFade("Death", .1f);
+                enemyManager.navMesh.isStopped = true;
+        }
         else
         {
             enemyManager.GetComponent<Rigidbody>().useGravity = true;
